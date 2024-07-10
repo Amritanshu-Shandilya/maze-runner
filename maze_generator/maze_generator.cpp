@@ -1,20 +1,36 @@
-// maze_generator.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
 
-int main()
-{
-    std::cout << "Hello World!\n";
+#include "maze_generator.h"
+
+int maze_dim = 240;
+int cellsize = 4;
+int cellspace = 4;
+
+int num_cells = floor(maze_dim / (cellspace + cellsize));
+int remaining_cells = num_cells * num_cells - 1;
+bool is_walking = true;
+
+int N, S, E, W;
+
+//Grid
+std::vector<std::vector<int>> grid(num_cells, std::vector<int>(num_cells, 0));
+
+int maze_generator(std::vector<std::vector<int>> grid) {
+	while (remaining_cells > 0)
+	{
+		// select one more random cell
+		grid[random_index_picker(num_cells)][random_index_picker(num_cells)] = 1;
+		
+	}
+	return 0;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+int main()
+{	
+	grid[start_pos[0]][start_pos[1]] = 1;
+	//grid[ending_pos[0]][ending_pos[1]] = 1;
+	//display_grid(grid, num_cells);
+	maze_generator(grid);
+	return 0;
+}
