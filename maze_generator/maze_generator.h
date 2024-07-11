@@ -66,5 +66,5 @@ std::pair<int, int> randomDirection() {
 
 bool InBounds(int x, int y) {
 	// This function checks whether the values x & y lie inside the grid 
-	return x > 0 && x < num_cells && y>0 && y < num_cells;
+	return x > 0 && x < (num_cells-1) && y > 0 && y <(num_cells-1);
 }
