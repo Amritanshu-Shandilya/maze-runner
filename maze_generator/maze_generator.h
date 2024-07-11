@@ -2,13 +2,15 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-#include <typeinfo>
+#include <unordered_set>
+#include <utility>
 
 // The ENTRY point of the maze
 std::vector<int> start_pos = { 0,7 };
 
 // The EXIT point of the maze
 std::vector<int> ending_pos = { 29,5 };
+
 
 int display_grid(std::vector<std::vector<int>> grid,  int num_cells) {
 
@@ -33,14 +35,9 @@ int random_index_picker(int numcells) {
 	return (rand() % ((high - low) + 1) + low);
 }
 
-bool random_walk(std::vector<std::vector<int>> grid) {
-	/*Constraints:
-		- It can cross the cells it had already walked as long as they are not already in the maze 
-		- Final path cannot have any loops in it.*/
+std::pair<int, int> randomDirection(std::vector<std::pair<int, int>> directions) {
 
-	for (int i = 0; i < ; i++)
-	{
+	// Picks a random direction
 
-	}
-
+	return directions[rand() % 4];
 }
