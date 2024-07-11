@@ -1,31 +1,44 @@
 #include <iostream>
 #include "maze_generator.h"
 
-int maze_dim = 240;
-int cellsize = 4;
-int cellspace = 4;
 
-int num_cells = floor(maze_dim / (cellspace + cellsize));
-int remaining_cells = num_cells * num_cells - 1;
-bool is_walking = true;
-
-std::unordered_set<int> inMaze;
-
-std::vector<std::pair<int, int>> directions = { {0,1}, {1,0}, {0,-1}, {-1,0} };
-/* {0,1} - Right, {0,-1} - Left, {1,0} - Down, {-1,0} - Up */
-
-// Grid
-std::vector<std::vector<int>> grid(num_cells, std::vector<int>(num_cells, 0));
-
-// Path
-std::vector<std::pair<int, int>> path;
-
-
-int wilson_algorithm(std::vector<std::vector<int>> grid) {
+int wilson_algorithm() {
 	// This algortithm generates a uniform spanning tree
-	while (remaining_cells > 0)
+	while (inMaze.size() < remaining_cells)
 	{
-		
+		int x, y; //For storing randomly generated coordinates of the cells
+		do
+		{
+			
+			/* This do while loop implements the first random walk.
+			As per the algorithm : 
+				We need to do a random walk untill we visit a cell that is already a part of the maze.
+				When we encounter a cell that is the part of the loop, we terminate the loop*/
+			
+			x = random_index_picker();
+			y = random_index_picker();
+
+		}
+		// Here we check if the linearized value of (x,y) already exists in the unordered set 
+		while (inMaze.count(x*num_cells+y)>0);
+
+		// Adds (x,y) to the path
+		path.push_back({ x,y });
+
+		// Loop erased random walk
+		while (inMaze.count(path.back().first*num_cells+path.back().second)==0)
+		{
+			// The conditions checks if the element of path vector is unvisited
+			
+			int u, v; // Stores the coordinates of the last element of path
+			u = path.back().first;
+			v = path.back().second;
+
+			std::pair<int, int> dir = randomDirection();
+
+		}
+
+
 	}
 	return 0;
 }
@@ -44,8 +57,9 @@ int main()
 	inMaze.insert(ending_pos[0] * num_cells + ending_pos[1]);
 
 	// select one more random cell
-	grid[random_index_picker(num_cells)][random_index_picker(num_cells)] = 1;
-	//display_grid(grid, num_cells);
-	//wilson_algorithm(grid);
+	int rand_index = random_index_picker();
+	grid[rand_index][rand_index] = 1;
+	display_grid();
+	//wilson_algorithm();
 	return 0;
 }

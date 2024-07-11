@@ -5,6 +5,28 @@
 #include <unordered_set>
 #include <utility>
 
+int maze_dim = 240;
+int cellsize = 4;
+int cellspace = 4;
+
+int num_cells = floor(maze_dim / (cellspace + cellsize));
+
+int remaining_cells = (num_cells * num_cells) / 2; //This will ensure that only half of the cells will be used to create the maze
+
+bool is_walking = true;
+
+std::unordered_set<int> inMaze;
+
+std::vector<std::pair<int, int>> directions = { {0,1}, {1,0}, {0,-1}, {-1,0} };
+/* {0,1} - Right, {0,-1} - Left, {1,0} - Down, {-1,0} - Up */
+
+// Grid
+std::vector<std::vector<int>> grid(num_cells, std::vector<int>(num_cells, 0));
+
+// Path
+std::vector<std::pair<int, int>> path;
+
+
 // The ENTRY point of the maze
 std::vector<int> start_pos = { 0,7 };
 
@@ -12,7 +34,7 @@ std::vector<int> start_pos = { 0,7 };
 std::vector<int> ending_pos = { 29,5 };
 
 
-int display_grid(std::vector<std::vector<int>> grid,  int num_cells) {
+int display_grid() {
 
 	//This function displays the grid on the command line
 
@@ -26,16 +48,16 @@ int display_grid(std::vector<std::vector<int>> grid,  int num_cells) {
 	return 0;
 }
 
-int random_index_picker(int numcells) {
+int random_index_picker() {
 
 	//This function returns a random index
 
-	int high = numcells;
+	int high = num_cells;
 	int low = 0;
 	return (rand() % ((high - low) + 1) + low);
 }
 
-std::pair<int, int> randomDirection(std::vector<std::pair<int, int>> directions) {
+std::pair<int, int> randomDirection() {
 
 	// Picks a random direction
 
