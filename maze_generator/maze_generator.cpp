@@ -13,7 +13,7 @@ int wilson_algorithm() {
 			/* This do while loop implements the first random walk.
 			As per the algorithm : 
 				We need to do a random walk untill we visit a cell that is already a part of the maze.
-				When we encounter a cell that is the part of the loop, we terminate the loop*/
+				When we encounter a cell that is the part of the loop, we terminate the loop */
 			
 			x = random_index_picker();
 			y = random_index_picker();
@@ -23,18 +23,41 @@ int wilson_algorithm() {
 		while (inMaze.count(x*num_cells+y)>0);
 
 		// Adds (x,y) to the path
-		path.push_back({ x,y });
+		if (InBounds(x, y)) {
+			path.push_back({ x,y });
+		}
 
 		// Loop erased random walk
 		while (inMaze.count(path.back().first*num_cells+path.back().second)==0)
 		{
 			// The conditions checks if the element of path vector is unvisited
 			
-			int u, v; // Stores the coordinates of the last element of path
-			u = path.back().first;
-			v = path.back().second;
+			int x, y; // Stores the coordinates of the last element of path
+			int nextX, nextY; // Stores the coordinates of the last element of the path
+
+			x = path.back().first;
+			y = path.back().second;
 
 			std::pair<int, int> dir = randomDirection();
+			
+			// Finding the coordinates of the next cell in the path
+			nextX = x + dir.first;
+			nextY = y + dir.second;
+
+			if (InBounds(nextX, nextY)) {
+				// If the next path cell lies inside the grid, add it to the path
+				path.push_back({nextX, nextY});
+			}
+
+			for (const auto& cell : path)
+			{
+
+				/* This range based for loop is used to iterate over path vector making its elements 
+				   a part of maze and changing its value to 1*/
+
+				inMaze.insert(cell.first * num_cells + cell.second);
+				grid[cell.first][cell.second] = 1;
+			}
 
 		}
 
@@ -59,7 +82,10 @@ int main()
 	// select one more random cell
 	int rand_index = random_index_picker();
 	grid[rand_index][rand_index] = 1;
+	
+	wilson_algorithm();
+	
 	display_grid();
-	//wilson_algorithm();
+
 	return 0;
 }

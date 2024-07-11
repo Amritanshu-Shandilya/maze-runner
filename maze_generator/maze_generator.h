@@ -63,3 +63,8 @@ std::pair<int, int> randomDirection() {
 
 	return directions[rand() % 4];
 }
+
+bool InBounds(int x, int y) {
+	// This function checks whether the values x & y lie inside the grid 
+	return x > 0 && x < num_cells && y>0 && y < num_cells;
+}
