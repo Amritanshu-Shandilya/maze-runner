@@ -4,15 +4,12 @@
 #include <ctime>
 #include <unordered_set>
 #include <utility>
+#include <string>
 
 
 class Maze_generator {
 
 	private:
-
-		int num_cells, remaining_cells;
-		// Grid
-		std::vector<std::vector<int>> grid;
 
 		std::vector<std::pair<int, int>> directions = { {0,1}, {1,0}, {0,-1}, {-1,0} };
 		/* {0,1} - Right, {0,-1} - Left, {1,0} - Down, {-1,0} - Up */
@@ -27,6 +24,11 @@ class Maze_generator {
 		std::vector<int> ending_pos = { 29,5 };
 
 	public:
+
+		int num_cells, remaining_cells;
+		
+		// Grid
+		std::vector<std::vector<int>> grid;
 		
 		Maze_generator(int, std::vector<std::vector<int>>); // Constructor
 
@@ -170,7 +172,7 @@ int Maze_generator::maze_setup()
 
 	wilson_algorithm();
 
-	display_grid();
+	//display_grid();
 
 	return 0;
 }
